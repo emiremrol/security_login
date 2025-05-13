@@ -40,7 +40,10 @@ class UserHttpHandler extends HttpHandlerAbstract
         }
 
         $currentUser = $userService->currentUser();
-        $this->render("users/profile", $currentUser);
+
+
+        //$this->render("users/profile", $currentUser);
+        $this->redirect('http://192.168.175.34:82/login');
 
     }
 

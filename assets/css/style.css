@@ -6,6 +6,11 @@
 
 body {
     /*background-color: #edf1f5;*/
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 header {
@@ -18,7 +23,7 @@ header {
 
 
 section {
-    height: calc(100vh - 110px);
+    /* height: calc(100vh - 110px); */
 }
 
 
@@ -69,21 +74,21 @@ section {
 /**Login page*/
 
 .login-form{
-    width:350px;
-    height:400px;
+    width:450px;
+    height:500px;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
 .img-box{
-    width:50%;
-    height:100%;
-    /*margin-left: 50px;*/
+    width: 200px;
+    height: 200px;
 }
 
 .img-box img{
-    height: 100%;
+    width: 100%;
+    height: auto;
 }
 
 /*Register page*/
