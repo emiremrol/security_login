@@ -3,9 +3,16 @@
 session_start();
 spl_autoload_register(
     function ($className){
-        require_once $className.".php";
+        if(PHP_OS != 'Linux'){
+            require_once $className.".php";
+        }else {
+            $path = str_replace("\\", "/", $className) . ".php";
+            require_once $path;
+        }
+
     }
 );
+
 
 $template = new \Core\Template\Template();
 $dataBinder = new \Core\DataBinder\DataBinder();

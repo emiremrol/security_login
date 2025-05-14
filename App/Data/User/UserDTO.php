@@ -4,30 +4,20 @@ class UserDTO
 {
     private $id;
     private $username;
-    private $email;
     private $password;
-    private $firstName;
-    private $lastName;
+    private $role_id;
+
 
     public static function create(
-        string $username, string $password, $id = null
+        string $username, string $password, int $role_id, $id = null
     )
     {
         return (new UserDTO())
             ->setUsername($username)
             ->setPassword($password)
+            ->setRoleId($role_id)
             ->setId($id);
     }
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function setEmail($email): UserDTO
-    {
-        $this->email = $email;
-        return $this;
-    }
-
 
     public function getId()
     {
@@ -62,28 +52,16 @@ class UserDTO
         return $this;
     }
 
-    public function getFirstName()
+    public function setRoleId(int $role_id): UserDTO
     {
-        return $this->firstName;
-    }
-
-    public function setFirstName($firstName): UserDTO
-    {
-        $this->firstName = $firstName;
+        $this->role_id = $role_id;  // Записваме role_id в свойството role
         return $this;
     }
 
-    public function getLastName()
+    public function getRoleId(): ?int
     {
-        return $this->lastName;
+        return $this->role_id;  // Връщаме стойността на role
     }
-
-    public function setLastName($lastName): UserDTO
-    {
-        $this->lastName = $lastName;
-        return $this;
-    }
-
 
 
 }

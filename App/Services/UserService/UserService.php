@@ -40,6 +40,7 @@ class UserService implements UserServiceInterface
         return false;
     }
 
+
     /**
      * @throws \Exception
      */
@@ -90,5 +91,16 @@ class UserService implements UserServiceInterface
         $plainPassword = $userDTO->getPassword();
         $hashPassword = $this->encryptionService->hash($plainPassword);
         $userDTO->setPassword($hashPassword);
+    }
+
+
+    public function add(UserDTO $userDTO): bool
+    {
+        if(null !== $this->userRepository->findOneByUsername($userDTO->getUsername())){
+            return false;
+        }
+
+        $this->encryptPassword($userDTO);
+        return $this->userRepository->inser($userDTO);
     }
 }

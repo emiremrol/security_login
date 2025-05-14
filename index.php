@@ -1,4 +1,5 @@
 <?php
 require_once "common.php";
 
-$userHttpHandler->index();
+// $userHttpHandler->index();
+$userHttpHandler->login($userService, $_POST);

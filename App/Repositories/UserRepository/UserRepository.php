@@ -19,12 +19,13 @@ class UserRepository implements UserRepositoryInterface
     {
         $this->db->query(
             "INSERT INTO 
-                        user(username, password) 
-                    VALUES(?, ?)"
+                        user(username, password, role_id) 
+                    VALUES(?, ?, ?)"
         )
             ->execute([
             $userDTO->getUsername(),
             $userDTO->getPassword(),
+            $userDTO->getRoleId()
         ]);
         return true;
     }
@@ -65,7 +66,8 @@ class UserRepository implements UserRepositoryInterface
             "SELECT
                         user_id AS id,
                         username,
-                        password
+                        password,
+                        role_id
                     FROM user
                     WHERE username = ?"
         )
@@ -80,7 +82,8 @@ class UserRepository implements UserRepositoryInterface
             "SELECT
                         user_id AS id,
                         username,
-                        password
+                        password,
+                        role_id
                     FROM user 
                     WHERE user_id = ?"
         )

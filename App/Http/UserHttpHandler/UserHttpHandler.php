@@ -41,15 +41,51 @@ class UserHttpHandler extends HttpHandlerAbstract
 
         $currentUser = $userService->currentUser();
 
+        if($currentUser->getRoleId() != 1){
+             $this->redirect('http://192.168.175.34:82/login');
+        }else{
+             $this->render("users/profile", $currentUser);
+        }
 
-        //$this->render("users/profile", $currentUser);
-        $this->redirect('http://192.168.175.34:82/login');
 
+        // $this->redirect('http://192.168.175.34:82/login');
+
+    }
+
+
+    public function addUser(UserServiceInterface $userService, array $formData = []):void 
+    {        
+        if(!$userService->isLogged()){
+            $this->redirect("login.php");
+        }
+
+        $currentUser = $userService->currentUser();
+        if($currentUser->getRoleId() != 1){
+             $this->redirect('http://192.168.175.34:82/login');
+        }
+
+        if(isset($formData['аdd_new'])){
+            $this->handleAddUserProcess($userService, $formData);
+        }else{
+            $this->render("users/addUser");
+        }
+
+    }
+
+    private function handleAddUserProcess(UserServiceInterface $userService, array $formData): void
+    {
+        $user = $this->dataBinder->bind($formData, UserDTO::class);
+        if ($userService->register($user, $formData['confirm_password'])) {
+            $this->redirect("profile.php");
+        } else {
+            $this->render("users/addUser", ['error' => new ErrorDTO("Проблем с регистрацията!")]);
+        }
     }
 
     private function handleRegisterProcess($userService, $formData): void
     {
         $user = $this->dataBinder->bind($formData, UserDTO::class);
+        $user->setRole(2);
         /**
          * @var UserServiceInterface $userService
          */
@@ -72,8 +108,8 @@ class UserHttpHandler extends HttpHandlerAbstract
         try {
             $user = $userService->login($formData['username'], $formData['password']);
             $_SESSION['id'] = $user->getId();
-            $_SESSION['first_name'] = $user->getFirstName();
             $this->redirect("profile.php");
+
         }catch (\Exception $ex){
             $this->render("users/login", $currentUser,
                 new ErrorDTO($ex->getMessage()));
