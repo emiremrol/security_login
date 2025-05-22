@@ -26,6 +26,7 @@ class UserHttpHandler extends HttpHandlerAbstract
 
     public function login(UserServiceInterface $userService, array $formData = []): void
     {
+  
         if(isset($formData['login'])){
             $this->handleLoginProcess($userService, $formData);
         }else{
@@ -41,12 +42,9 @@ class UserHttpHandler extends HttpHandlerAbstract
 
         $currentUser = $userService->currentUser();
 
-        if($currentUser->getRoleId() != 1){
+        // if($currentUser->getRoleId() != 1){
              $this->redirect('http://192.168.175.34:82/login');
-        }else{
-             $this->render("users/profile", $currentUser);
-        }
-
+        // }
 
         // $this->redirect('http://192.168.175.34:82/login');
 
@@ -60,9 +58,6 @@ class UserHttpHandler extends HttpHandlerAbstract
         }
 
         $currentUser = $userService->currentUser();
-        if($currentUser->getRoleId() != 1){
-             $this->redirect('http://192.168.175.34:82/login');
-        }
 
         if(isset($formData['аdd_new'])){
             $this->handleAddUserProcess($userService, $formData);
@@ -85,7 +80,6 @@ class UserHttpHandler extends HttpHandlerAbstract
     private function handleRegisterProcess($userService, $formData): void
     {
         $user = $this->dataBinder->bind($formData, UserDTO::class);
-        $user->setRole(2);
         /**
          * @var UserServiceInterface $userService
          */
@@ -108,8 +102,11 @@ class UserHttpHandler extends HttpHandlerAbstract
         try {
             $user = $userService->login($formData['username'], $formData['password']);
             $_SESSION['id'] = $user->getId();
-            $this->redirect("profile.php");
-
+            if($userService->isLogged())
+            {
+                setcookie('logged_in', '1', time() + 3600, "/");
+                $this->redirect('/panel');
+            }
         }catch (\Exception $ex){
             $this->render("users/login", $currentUser,
                 new ErrorDTO($ex->getMessage()));

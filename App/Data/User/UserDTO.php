@@ -5,17 +5,15 @@ class UserDTO
     private $id;
     private $username;
     private $password;
-    private $role_id;
 
 
     public static function create(
-        string $username, string $password, int $role_id, $id = null
+        string $username, string $password, $id = null
     )
     {
         return (new UserDTO())
             ->setUsername($username)
             ->setPassword($password)
-            ->setRoleId($role_id)
             ->setId($id);
     }
 
@@ -51,17 +49,5 @@ class UserDTO
         $this->password = $password;
         return $this;
     }
-
-    public function setRoleId(int $role_id): UserDTO
-    {
-        $this->role_id = $role_id;  // Записваме role_id в свойството role
-        return $this;
-    }
-
-    public function getRoleId(): ?int
-    {
-        return $this->role_id;  // Връщаме стойността на role
-    }
-
 
 }

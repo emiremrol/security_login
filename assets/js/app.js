@@ -1,17 +1,20 @@
 
 
 const viewPasswordBtns = document.querySelectorAll(".visiblePass");
-viewPasswordBtns.forEach(btn => {
-    btn.addEventListener("click", (e)=>{
-        e.preventDefault();
-        const input = btn.previousElementSibling;
-        if(input.type === "password"){
-            input.type = "text";
-        }else{
-            input.type = "password";
-        }
+if (viewPasswordBtns) {
+    viewPasswordBtns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const input = btn.previousElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        })
     })
-})
+
+}
 
 let pagLinks = document.querySelectorAll(".page-item .page-link");
 let pageId = document.body.id;
@@ -28,3 +31,14 @@ let pageId = document.body.id;
 // myInput.onblur = function() {
 //   document.getElementById("message").style.display = "none";
 // }
+
+const alertBox = document.querySelector('#alert');
+
+if (alertBox) {
+    setTimeout(function () {
+        var bsAlert = bootstrap.Alert.getOrCreateInstance(alertBox);
+        bsAlert.close();
+    }, 5000);
+}
+
+

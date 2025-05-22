@@ -63,14 +63,6 @@
                 </div>
 
                 <div class="mt-3">
-                    <select name="role_id" id="role_id" class="form-select" required>
-                        <option value="" disabled selected>-- Избери роля --</option>
-                        <option value="1">Администратор</option>
-                        <option value="2">Потребител</option>
-                    </select>
-                </div>
-
-                <div class="mt-3">
                     <input type="submit" name="аdd_new" class="btn btn-primary w-100" value="add">
                 </div>
             </form>
